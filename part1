@@ -1,0 +1,146 @@
+#Devin Vandenburg
+#CS435-006
+#Projet2
+
+
+
+import random
+class Vertex:
+    def node(self,n):
+        self.id = n
+
+class Graph:
+    pass
+    #list of all nodes
+    vertices = ()
+    #dictionary to hold nodeVals and their neighbors
+    adjacencyList = {}
+    def getNeighbors(self,n):
+        idlst = ()
+        lst = ()
+        for key,val in self.adjacencyList:
+            if key == self.n.id:
+                for id in val:
+                    idlst.append(id)
+        for nodes in idlst:
+            lst.append(Vertex.node(self,nodes))
+        return lst
+    #check to see if key is in adj list first, if so add to existing list
+    def insertIntoAdj(self,key,value):
+        if key in self.adjacencyList.keys():
+            self.adjancencyList[key].append(value)
+        else:
+            self.adjancencyList[key] = ()
+            self.adjancencyList[key].append(value)
+    #check to see if node was already made, if not then make it and add it to vertices
+    def addNode(self,nodeVal):
+        if nodeVal not in self.vertices:
+            Vertex.node(self,nodeVal)
+            self.vertices.append(nodeVal)
+    def addUndirectedEdge(self,a,b):
+        if self.a.id in self.vertices and self.b.id in self.vertices:
+            self.insertIntoAdj(self, self.a.id, self.b.id)
+            self.insertIntoAdj(self, self.b.id, self.a.id)
+    def addDirectedEdge(self,a,b):
+        if self.a.id in self.vertices and self.b.id in self.vertices:
+            self.insertIntoAdj(self, self.a.id, self.b.id)
+    def removeUndirectedEdge(self,a,b):
+        if self.a.id in self.vertices and self.b.id in self.vertices:
+            self.adjacencyList[self.a.id].remove(self.b.id)
+            self.adjacencyList[self.b.id].remove(self.a.id)
+    def getAllNodes(self):
+        print(self.vertices)
+    def createRandomUnweightedGraphIter(self,n):
+        #create n nodes
+        for i in range(n):
+            self.addNode(self,i)
+        #go through all the nodes and link them randomly
+        for i in range(n):
+            node1 = Vertex.node(self,i)
+            randomNode = random.random(0,n)
+            node2 = Vertex.node(self,randomNode)
+            self.addUndirectedEdge(self,node1,node2)
+    def createLinkedList(self,n):
+        #modify addDirectedEdge to only go in one direction
+        for i in range(n):
+            if i > 0:
+                node1 = Vertex.node(self, i-1)
+                node2 = Vertex.node(self, i)
+                self.addDirectedEdge(self, node1, node2)
+            else:
+                self.addNode(self, i)
+
+class GraphSearch:
+    pass
+    def DFSRec(self,start,final):
+        #keep track of nodes visited
+        visited = ()
+        #all nodes were visited but no match found
+        if visited.count(start.id) > 0:
+            return None
+        visited.pop(start.id)
+        #check to see if node was found
+        if start.id == final.id:
+            return visited
+        #preform the aformentioned operations with all of the nodes neighbors
+        for child in start.getNeighbors():
+            if self.DFSRec(child,final,visited):
+                return visited
+        return None
+    def DFSIter(self,start,final):
+        visited = ()
+        DFSLst = ()
+        #get start node
+        DFSLst.append(start)
+        while len(DFSLst) != 0:
+            #get next node of iteration
+            child = DFSLst.pop()
+            #check for visit, if not, then visit and get its neighbors
+            if child.id not in visited:
+                visited.append(child.id)
+                tempLst = child.getNeighbors()
+                #add neigbor nodes to stack
+                for child2 in tempLst:
+                    DFSLst.insert(0,child2)
+        #check to see if final was found
+        if visited[len-1] == final.id:
+            return visited
+        else:
+            return None
+    def BFSRec(self,start,final):
+        visited = ()
+        if visited.count(start.id) > 0:
+            return None
+        visited.insert(0,start.id)
+        if start.id == final.id:
+            return visited
+        for child in start.getNeighbors():
+            if self.BFSRec(child,final,visited):
+                return visited
+        return None
+
+    def BFSIter(self,start,final):
+        visited = ()
+        BFSList = ()
+        BFSList.append(start)
+        while len(BFSList) != 0:
+            node = BFSList.pop()
+            if node.id == final.id:
+                visited.append(node.id)
+                return visited
+            if node.id in visited:
+                continue
+            visited.append(node.id)
+            for child in node.getNeighbors():
+                BFSList.insert(0,child)
+        return None
+
+
+
+
+
+
+
+
+
+
